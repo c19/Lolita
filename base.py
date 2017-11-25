@@ -156,7 +156,7 @@ def ensure_unicode(string):
 
 
 def ensure_utf8(string):
-    return string.encode('utf-8') if isinstance(string, unicode) else string
+    return string if isinstance(string, bytes) else string.encode('utf-8')
 
 
 def date_handler(obj):
