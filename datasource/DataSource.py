@@ -1,5 +1,4 @@
 import sys,os
-import ipdb
 path = os.path.dirname(__file__)
 sys.path.insert(0, os.path.join(path, '../'))
 from base import do, update

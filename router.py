@@ -1,6 +1,5 @@
 import signal
 import tornado.ioloop
-import ipdb
 from concurrent import futures
 from tornado.web import Application, StaticFileHandler, RedirectHandler, HTTPError, RequestHandler
 from tornado.ioloop import IOLoop
