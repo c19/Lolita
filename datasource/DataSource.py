@@ -2,7 +2,7 @@ import sys,os
 path = os.path.dirname(__file__)
 sys.path.insert(0, os.path.join(path, '../'))
 from base import do, update
-from PostgresSQL import Records
+from datasource.PostgresSQL import Records
 
 initializer = {'Records': Records}
 

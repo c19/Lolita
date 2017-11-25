@@ -3,7 +3,7 @@
 #    postgresql queries
 #    C19<caoyijun2050@gmail.com>
 
-from sqlbase import SQLBase
+from datasource.sqlbase import SQLBase
 import os
 import sys
 import xxhash

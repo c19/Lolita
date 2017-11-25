@@ -28,7 +28,7 @@ class SQLBase(object):
 				try:
 					cursor.execute(sql)
 					self.conn.commit()
-				except (Exception, e):
+				except Exception as e:
 					print(e)
 					self.conn.commit()
 	def _sql(self, execute, cursor, *arg, **kwarg):
@@ -36,7 +36,7 @@ class SQLBase(object):
 			execute(cursor)(*arg, **kwarg)
 			self.conn.commit()
 			return cursor.fetchall() if arg[0].lower().startswith('select') else []
-		except (Exception, e):
+		except Exception as e:
 			print(e)
 			self.conn.rollback()
 			raise e
