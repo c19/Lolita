@@ -56,7 +56,8 @@ class App {
 		self.backEnd.on("/login", function(result, ret) {
 			if (result.status == "ok") {
 				self.logined = true;
-				window.location.hash = "#home"
+				window.location.hash = "#home";
+				self.backEnd.sendWithSign({"protocol": "/get/records/all"});
 			}
 		});
 
