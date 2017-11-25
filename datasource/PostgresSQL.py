@@ -10,7 +10,6 @@ import xxhash
 path = os.path.dirname(__file__)
 sys.path.insert(0, os.path.join(path, '../'))
 from base import do, xxhash, flatten, update, curry_map, chain
-import ujson
 
 __all__ = ['Records']
 
