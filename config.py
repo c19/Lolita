@@ -5,7 +5,6 @@
 
 import json
 import os
-import redis
 from base import do
 
 __all__ = ['Config', 'set_config']
