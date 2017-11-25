@@ -35,7 +35,7 @@ class WebSocketServer(WebSocketHandler):
                     raise AuthFailed('帐号或密码错误')
                 content = message[:-(len(username) + len(sign) + 21)] + '}'
                 if not all([user.secret_key, sign,
-                            sign == hmac.new(user.secret_key, ensure_utf8(content), hashlib.sha256).hexdigest()]):
+                            sign == hmac.new(ensure_utf8(user.secret_key), ensure_utf8(content), hashlib.sha256).hexdigest()]):
                     raise AuthFailed('帐号或密码错误')
                 if not user.able_to(protocol):
                     raise AuthFailed('没有权限')
