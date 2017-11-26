@@ -49,7 +49,8 @@ while [ 1 ]; do
 		# fi
 
 		echo "$summary" "$body"
-		
+		git checkout -f "$repository"
+		git pull
 		./restart.sh
 	fi
 	sleep 2
