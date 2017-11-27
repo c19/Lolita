@@ -1,42 +1,3 @@
-function createTR(item, keys){
-	let tr = document.createElement('tr');
-	keys.map(k=>{
-		let td = document.createElement('td');
-		if (typeof k == 'string'){
-			td.innerText = item[k];
-		}else{
-			td.innerText = k[1](item, k[0]);
-		}
-		return td;
-	}).map(td=>tr.appendChild(td));
-	return tr;
-}
-
-function createTable(items, headers, columns) {
-	let table = document.createElement('table');
-	let tableBody = document.createElement('tbody');
-	
-	// body
-	items.map(a => createTR(a, columns))
-		 .map(tr => tableBody.appendChild(tr));
-	table.appendChild(tableBody);
-	let container = document.getElementById('tableContainer');
-
-	// header
-	let tr = document.createElement('tr');
-	tr.id = 'table-header'
-	headers.map(n=>{
-		let td = document.createElement('td');
-		td.innerText = n;
-		return td;
-	}).map(td=>tr.appendChild(td));
-	tableBody.appendChild(tr);
-
-	container.appendChild(table);
-	return table;
-}
-
-
 class App {
 	constructor() {
 		let self = this;
@@ -49,7 +10,7 @@ class App {
 
 		self.router = new Router({
 			"": "login",
-			"#home": "home"
+			"home": "home"
 		});
 
 		self.backEnd = new BackEnd("ws://" + location.host + "/ws");
@@ -63,10 +24,9 @@ class App {
 
 		self.backEnd.on("/get/records/all", function(result, ret) {
 			self.records = result;
-			createTable(result, ['买卖', '名称', '类型', '价格', '付款', '状态', '备注'], 
+			self.createTable(result, ['买卖', '名称', '价格', '付款', '状态', '备注'], 
 								[['buyorsell', (item, k) => item[k] ? '买' : '卖'],
 								'name',
-								'catagory',
 								'price',
 								'paid',
 								'status',
@@ -81,5 +41,49 @@ class App {
 		this.backEnd.sendWithSign({
 			protocol: "/login"
 		});
+	}
+
+	AddNew() {
+		showID("popups")
+		showID("AddNew");
+	}
+
+	createTR(item, keys){
+		let tr = document.createElement('tr');
+		keys.map(k=>{
+			let td = document.createElement('td');
+			if (typeof k == 'string'){
+				td.innerText = item[k];
+			}else{
+				td.innerText = k[1](item, k[0]);
+			}
+			return td;
+		}).map(td=>tr.appendChild(td));
+		return tr;
+	}
+
+	createTable(items, headers, columns) {
+		let self = this;
+		let table = document.createElement('table');
+		let tableBody = document.createElement('tbody');
+		
+		// body
+		items.map(a => self.createTR(a, columns))
+			 .map(tr => tableBody.appendChild(tr));
+		table.appendChild(tableBody);
+		let container = document.getElementById('tableContainer');
+
+		// header
+		let tr = document.createElement('tr');
+		tr.id = 'table-header'
+		headers.map(n=>{
+			let td = document.createElement('td');
+			td.innerText = n;
+			return td;
+		}).map(td=>tr.appendChild(td));
+		tableBody.appendChild(tr);
+
+		container.appendChild(table);
+		return table;
 	}
 }

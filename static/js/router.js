@@ -1,4 +1,4 @@
-function showId(id) {
+function showID(id) {
 	let elm = document.getElementById(id);
 	if (elm) {
 		elm.style.display = "block";
@@ -7,7 +7,7 @@ function showId(id) {
 	}
 }
 
-function hideId(id) {
+function hideID(id) {
 	let elm = document.getElementById(id);
 	if (elm) {
 		elm.style.display = "none";
@@ -27,8 +27,8 @@ class Router {
 		let route = self.routes[hash];
 		let oldRoute = self.routes[oldHash];
 		if (route && typeof route == 'string') {
-			hideId(oldRoute);
-			showId(route);
+			hideID(oldRoute);
+			showID(route);
 		} else {
 			self.onerror("invalid route for: " + hash);
 		}
@@ -38,7 +38,7 @@ class Router {
 		window.addEventListener('hashchange',
 			function(event) {
 				let prev = event.oldURL.split("#")[1] || "";
-				self.handle.call(self, window.location.hash, prev);
+				self.handle.call(self, window.location.hash.split("#")[1] || "", prev);
 			}, false);
 		window.addEventListener('beforeunload',
 			function(event) {
@@ -46,9 +46,11 @@ class Router {
 			}, false);
 		window.addEventListener('load',
 			function(event) {
+				Object.values(self.routes).map(hideID);
 				self.handle.call(self, window.location.hash, "");
 			}, false);
 		if(document.readyState === "complete") {
+			Object.values(self.routes).map(hideID);
 			self.handle.call(self, window.location.hash, "");
 		}
 	}
