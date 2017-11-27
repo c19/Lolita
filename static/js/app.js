@@ -10,23 +10,23 @@ class App {
 		self.newRecord = {
 			get price() {
 				return parseInt(document.getElementById("price")||"0");
-			}
+			},
 			get baseprice() {
 				return parseInt(document.getElementById("baseprice")||"0");
-			}
+			},
 			get name() {
 				return document.getElementById("name")||"";
-			}
+			},
 			get status() {
 				return document.getElementById("status")||"";	
-			}
+			},
 			get catagory() {
 				return document.getElementById("catagory")||"";	
-			}
+			},
 			get remark() {
 				return document.getElementById("remark")||"";	
 			}
-		}
+		};
 
 		if (window.location.hash !== "") {
 			window.location.hash = "";
