@@ -4,6 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,viewport-fit=cover">
+		<script src="./js/utils.js"></script>
 		<script src="./js/main.js"></script>
 		<script src="./js/app.js"></script>
 		<script src="./js/router.js"></script>
@@ -35,7 +36,7 @@
 		<div id="home" style="display:none;">
 			<div id="tableContainer">
 			</div>
-			<div><button class="weui-btn weui-btn_plain-primary" onclick="app.AddNew();">添加</button></div>
+			<div><button class="weui-btn weui-btn_plain-primary" onclick="app.ShowAddNew();">添加</button></div>
 			<div id="popups" style="display:none;">
 				<div id="popup-mask" class="weui-mask"></div>
 				<div id="AddNew" class="popup-full">
@@ -47,20 +48,14 @@
 								<div class="weui-cells weui-cells_form">
 									<div class="weui-cell">
 										<div class="weui-cell__bd">
-										<textarea class="weui-textarea" placeholder="备注" rows="3"></textarea>
+										<textarea id="remark" class="weui-textarea" placeholder="备注"></textarea>
 										</div>
 									</div>
 								</div>
 								<div class="weui-cells">
 									<div class="weui-cell weui-cell_select weui-cell_select-before">
-										<div class="weui-cell__hd"><label class="weui-label" style="padding-right: 15px;">状态</label></div>
 										<div class="weui-cell__bd">
-											<select class="weui-select" style="width:100%;" name="selectStatus">
-											<option value="已预订未付款">已预订未付款</option>
-											<option value="已预订已付款">已预订已付款</option>
-											<option value="快递中">快递中</option>
-											<option value="已收到">已收到</option>
-											<option value="已退款">已退款</option>
+											<select id="status" class="weui-select" style="width:100%;" name="selectStatus">
 											</select>
 										</div>
 									</div>
@@ -69,14 +64,10 @@
 									<div class="weui-cell weui-cell_select weui-cell_select-before">
 										<div class="weui-cell__hd">
 											<select class="weui-select" name="selectCatagories">
-											<option value="1">+86</option>
-											<option value="2">+80</option>
-											<option value="3">+84</option>
-											<option value="4">+87</option>
 											</select>
 										</div>
 										<div class="weui-cell__bd">
-											<input class="weui-input" type="text" placeholder="输入或选择分类">
+											<input id="catagory" class="weui-input" type="text" placeholder="输入或选择分类">
 										</div>
 									</div>
 								</div>
@@ -84,48 +75,36 @@
 									<div class="weui-cell weui-cell_select weui-cell_select-before">
 										<div class="weui-cell__hd">
 											<select class="weui-select" name="selectNames">
-											<option value="1">+86</option>
-											<option value="2">+80</option>
-											<option value="3">+84</option>
-											<option value="4">+87</option>
 											</select>
 										</div>
 										<div class="weui-cell__bd">
-											<input class="weui-input" type="text" placeholder="输入或选择名称">
+											<input id="name" class="weui-input" type="text" placeholder="输入或选择名称">
 										</div>
 									</div>
 								</div>
 								<div class="weui-cell">
 									<div class="weui-cell__hd"><label class="weui-label">已支付</label></div>
 									<div class="weui-cell__bd">
-									<input class="weui-input" type="number" pattern="[0-9]*" placeholder="已支付的金额，包括邮费等杂项。">
+									<input id="paid" class="weui-input" type="number" pattern="[0-9]*" placeholder="已支付的金额，包括邮费等杂项。">
 									</div>
 								</div>
 								<div class="weui-cell">
 									<div class="weui-cell__hd"><label class="weui-label">原价</label></div>
 									<div class="weui-cell__bd">
-									<input class="weui-input" type="number" pattern="[0-9]*" placeholder="判断溢价的基准价格">
+									<input id="baseprice" class="weui-input" type="number" pattern="[0-9]*" placeholder="判断溢价的基准价格">
 									</div>
 								</div>
 								<div class="weui-cell">
 									<div class="weui-cell__hd"><label class="weui-label">价格</label></div>
 									<div class="weui-cell__bd">
-									<input class="weui-input" type="number" pattern="[0-9]*" placeholder="实际价格">
-									</div>
-								</div>
-								<div class="switch">
-									<div class="weui-navbar__item weui-bar__item_on">
-									买入
-									</div>
-									<div class="weui-navbar__item">
-									卖出
+									<input id="price" class="weui-input" type="number" pattern="[0-9]*" placeholder="实际价格">
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="footer  flex-fixed">
-							<a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default">取消</a>
-							<a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary">添加</a>
+						<div class="footer flex-fixed">
+							<a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default" onclick="app.HideAddNew();">取消</a>
+							<a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" onclick="app.AddNew();">添加</a>
 						</div>
 					</div>
 				</div>

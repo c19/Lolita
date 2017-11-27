@@ -3,6 +3,30 @@ class App {
 		let self = this;
 		self.logined = false;
 		self.records = [];
+		self.names = [];
+		self.catagories = [];
+		self.status = [];
+
+		self.newRecord = {
+			get price() {
+				return parseInt(document.getElementById("price")||"0");
+			}
+			get baseprice() {
+				return parseInt(document.getElementById("baseprice")||"0");
+			}
+			get name() {
+				return document.getElementById("name")||"";
+			}
+			get status() {
+				return document.getElementById("status")||"";	
+			}
+			get catagory() {
+				return document.getElementById("catagory")||"";	
+			}
+			get remark() {
+				return document.getElementById("remark")||"";	
+			}
+		}
 
 		if (window.location.hash !== "") {
 			window.location.hash = "";
@@ -22,17 +46,37 @@ class App {
 			}
 		});
 
-		self.backEnd.on("/get/records/all", function(result, ret) {
-			self.records = result;
-			self.createTable(result, ['买卖', '名称', '价格', '付款', '状态', '备注'], 
-								[['buyorsell', (item, k) => item[k] ? '买' : '卖'],
-								'name',
-								'price',
-								'paid',
-								'status',
-								'remark',
-								]);
+		self.backEnd.on("/get/records/all", function(records, ret) {
+			self.RefreshData(records);
 		});
+	}
+
+	setTable(items, headers, columns) {
+		let table = createTable(items, headers, columns);
+		let container = document.getElementById('tableContainer');
+		clearChildren(container);
+		container.appendChild(table);
+		return table;
+	}
+
+	RefreshData(records) {
+		let self = this;
+		self.records = records;
+		self.setTable(records, ['买卖', '名称', '价格', '付款', '状态', '备注'], 
+							[['buyorsell', (item, k) => item[k] ? '买' : '卖'],
+							'name',
+							'price',
+							'paid',
+							'status',
+							'remark',
+							]);
+		self.names = Array.from((new Set(self.records.map(a=>a.name))).keys()).sort();
+		self.catagories = Array.from((new Set(self.records.map(a=>a.catagory))).keys()).sort();
+		self.status = Array.from((new Set(self.records.map(a=>a.status))).keys()).sort();
+
+		setOptions("selectNames", self.names);
+		setOptions("selectCatagories", self.catagories);
+		setOptions("selectStatus", self.status);
 	}
 
 	Login() {
@@ -43,47 +87,17 @@ class App {
 		});
 	}
 
-	AddNew() {
-		showID("popups")
+	ShowAddNew() {
+		showID("popups");
 		showID("AddNew");
 	}
 
-	createTR(item, keys){
-		let tr = document.createElement('tr');
-		keys.map(k=>{
-			let td = document.createElement('td');
-			if (typeof k == 'string'){
-				td.innerText = item[k];
-			}else{
-				td.innerText = k[1](item, k[0]);
-			}
-			return td;
-		}).map(td=>tr.appendChild(td));
-		return tr;
+	HideAddNew() {
+		hideID("AddNew");
+		hideID("popups");
 	}
 
-	createTable(items, headers, columns) {
-		let self = this;
-		let table = document.createElement('table');
-		let tableBody = document.createElement('tbody');
-		
-		// body
-		items.map(a => self.createTR(a, columns))
-			 .map(tr => tableBody.appendChild(tr));
-		table.appendChild(tableBody);
-		let container = document.getElementById('tableContainer');
+	AddNew() {
 
-		// header
-		let tr = document.createElement('tr');
-		tr.id = 'table-header'
-		headers.map(n=>{
-			let td = document.createElement('td');
-			td.innerText = n;
-			return td;
-		}).map(td=>tr.appendChild(td));
-		tableBody.appendChild(tr);
-
-		container.appendChild(table);
-		return table;
 	}
 }
