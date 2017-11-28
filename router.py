@@ -17,8 +17,6 @@ define("config", default="./config/config.json", help="point to config file", ty
 tornado.options.parse_command_line()
 
 Config = get_dbs(set_config(options.config))
-print(Config)
-print(config.Config)
 def main():
     app = App()
     ioloop = IOLoop.instance()

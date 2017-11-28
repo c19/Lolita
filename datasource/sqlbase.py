@@ -55,13 +55,13 @@ class SQLBase(object):
 	def sql_quote(self, one):
 		if isinstance(one, (int, long, float)):
 			return str(one)
-		if not isinstance(one, str) and not isinstance(one, unicode):
+		if not isinstance(one, str):
 			one = str(one)
 		return QuotedString(one).getquoted()
 	def sql_guard(self, arg):
 		if isinstance(arg, (int, long, float)):
 			return arg
-		if not isinstance(arg, str) and not isinstance(arg, unicode):
+		if not isinstance(arg, str):
 			raise ValueError("sql params only accept string and numbers")
 		if not re.match('^[\w_-]+$', arg):
 			raise ValueError("sql params only accept [\w_-]")

@@ -10,7 +10,8 @@ class Backend(WebSocketServer):
         super(Backend, self).__init__(*arg, **kwarg)
         self.handlers = {
             "/login": lambda kwarg: {"status": "ok"},
-            "/get/records/all": lambda kwarg: config.Config['dbs']['Records'].get_records(**kwarg)
+            "/get/records/all": lambda kwarg: config.Config['dbs']['Records'].get_records(**kwarg),
+            "/add/record": lambda kwarg: config.Config['dbs']['Records'].insert_record(**kwarg)
             }
         self.open_handlers = set()
 

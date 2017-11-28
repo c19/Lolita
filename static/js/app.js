@@ -9,25 +9,28 @@ class App {
 
 		self.newRecord = {
 			get price() {
-				return parseInt(document.getElementById("price")||"0");
+				return parseInt(document.getElementById("price").value||"0");
 			},
 			get baseprice() {
-				return parseInt(document.getElementById("baseprice")||"0");
+				return parseInt(document.getElementById("baseprice").value||"0");
 			},
 			get name() {
-				return document.getElementById("name")||"";
+				return document.getElementById("name").value||"";
 			},
 			get status() {
-				return document.getElementById("status")||"";	
+				return document.getElementById("status").value||"";	
 			},
 			get catagory() {
-				return document.getElementById("catagory")||"";	
+				return document.getElementById("catagory").value||"";	
 			},
 			get remark() {
-				return document.getElementById("remark")||"";	
+				return document.getElementById("remark").value||"";	
 			},
 			get mail_fee() {
-				return parseInt(document.getElementById("mail_fee")||"0");
+				return parseInt(document.getElementById("mail_fee").value||"0");
+			},
+			get paid() {
+				return parseInt(document.getElementById("paid").value||"0");
 			}
 		};
 
