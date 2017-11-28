@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # coding=utf-8
 #    postgresql queries
 #    C19<caoyijun2050@gmail.com>
@@ -21,6 +21,7 @@ class Records(SQLBase):
 												buyorsell BOOLEAN NOT NULL,
 												price INT NOT NULL,
 												baseprice INT,
+												mail_fee INT,
 												name VARCHAR(1024),
 												status VARCHAR(255),
 												remark VARCHAR(1024),
@@ -38,7 +39,7 @@ class Records(SQLBase):
 		self.ensure_tables()
 	def get_records(self, **kwarg):
 		return self.sql_real_dict('select * from records order by "id";')
-	def insert_record(self, *arg):
+	def insert_record(self, **kwarg):
 		self.sql("insert into records (buyorsell, price, baseprice, name, status, remark, catagory, t_created, paid) values (%s, %s, %s, %s, %s, 'now()', %s);", arg)
 
 def get_batch(iterable, n = 1):

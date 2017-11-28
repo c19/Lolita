@@ -25,6 +25,9 @@ class App {
 			},
 			get remark() {
 				return document.getElementById("remark")||"";	
+			},
+			get mail_fee() {
+				return parseInt(document.getElementById("mail_fee")||"0");
 			}
 		};
 
@@ -48,6 +51,7 @@ class App {
 
 		self.backEnd.on("/get/records/all", function(records, ret) {
 			self.RefreshData(records);
+			window.scrollTo(0,document.body.scrollHeight);
 		});
 	}
 
@@ -90,6 +94,7 @@ class App {
 	ShowAddNew() {
 		showID("popups");
 		showID("AddNew");
+		scrollToBottom("add-content");
 	}
 
 	HideAddNew() {
@@ -98,6 +103,7 @@ class App {
 	}
 
 	AddNew() {
-
+		let self = this;
+		self.backEnd.sendWithSign({protocol: "/add/record", payload: self.newRecord});
 	}
 }

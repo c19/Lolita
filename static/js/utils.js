@@ -57,3 +57,44 @@ function createTable(items, headers, columns) {
 	tableBody.appendChild(tr);
 	return table;
 }
+
+function scrollToBottom(id){
+	let s = document.getElementById(id);
+	s.scrollTop = s.scrollHeight;
+}
+
+function RunHtmlSnippet(attr){
+	document.querySelectorAll(`[${attr}]`).forEach(elm=>{
+		Function("elm", elm.getAttribute(attr))(elm);
+	});
+}
+
+function SetHtmlDefault(){
+	document.querySelectorAll("[default]").forEach(elm=>{
+		elm.value = elm.getAttribute("default");
+	});
+}
+
+function setWriteToListener(){
+	document.querySelectorAll("[writeTo]").forEach(elm=>{
+		let target = document.getElementById(elm.getAttribute("writeTo"));
+		elm.addEventListener("change", function(event){
+			target.value = event.target.value;
+		});
+	});
+}
+
+function setOnChildListChange(){
+	document.querySelectorAll("[onChildListChange]").forEach(elm=>{
+		// create an observer instance
+		var observer = new MutationObserver(function(mutations) {
+			console.log(mutations);   
+		});
+
+		// configuration of the observer:
+		var config = { attributes: false, childList: true, characterData: false };
+
+		// pass in the target node, as well as the observer options
+		observer.observe(target, config);
+	});
+}
